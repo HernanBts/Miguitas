@@ -2,6 +2,7 @@
 {
     using Entities;
     using Microsoft.AspNetCore.Identity;
+    using Miguitas.Web.Helpers;
     using System;
     using System.Linq;
     using System.Threading.Tasks;
@@ -10,13 +11,13 @@
     public class SeedDb
     {
         private readonly DataContext context;
-        private readonly UserManager<User> userManager;
+        private readonly IUserHelper userHelper;
         private readonly Random random;
 
-        public SeedDb(DataContext context, UserManager<User> userManager)
+        public SeedDb(DataContext context, IUserHelper userHelper)
         {
             this.context = context;
-            this.userManager = userManager;
+            this.userHelper = userHelper;
             this.random = new Random();
         }
 
@@ -24,7 +25,7 @@
         {
             await this.context.Database.EnsureCreatedAsync();
 
-            var user = await this.userManager.FindByEmailAsync("admin@miguitas.com");
+            var user = await this.userHelper.GetUserByEmailAsync("admin@miguitas.com");
             if (user == null)
             {
                 user = new User
@@ -35,7 +36,7 @@
                     UserName = "admin@miguitas.com"
                 };
 
-                var result = await this.userManager.CreateAsync(user, "123456");
+                var result = await this.userHelper.AddUserAsync(user, "123456");
                 if (result != IdentityResult.Success)
                 {
                     throw new InvalidOperationException("Could not create the user in seeder");
