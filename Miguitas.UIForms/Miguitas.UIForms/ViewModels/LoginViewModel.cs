@@ -2,6 +2,7 @@
 {
     using GalaSoft.MvvmLight.Command;
     using System.Windows.Input;
+    using Views;
     using Xamarin.Forms;
 
     public class LoginViewModel
@@ -41,10 +42,8 @@
                 return;
             }
 
-            await Application.Current.MainPage.DisplayAlert(
-                "Ok",
-                "Fuck yeah!!!",
-                "Accept");
+            MainViewModel.GetInstance().Products = new ProductsViewModel();
+            await Application.Current.MainPage.Navigation.PushAsync(new ProductsPage());
         }
     }
 
