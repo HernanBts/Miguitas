@@ -38,7 +38,9 @@
                     return null;
                 }
 
-                return $"https://miguitas.azurewebsites.net{this.ImageUrl.Substring(1)}";
+                //TODO: Chango when publish.
+                //return $"https://miguitas.azurewebsites.net{this.ImageUrl.Substring(1)}";
+                return $"https://miguitas-web.conveyor.cloud{this.ImageUrl.Substring(1)}";
             }
         }
 

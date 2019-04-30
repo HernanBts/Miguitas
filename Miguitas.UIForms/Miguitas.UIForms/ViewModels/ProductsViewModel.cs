@@ -38,7 +38,7 @@
         {
             this.IsRefreshing = true;
             var response = await this.apiService.GetListAsync<Product>(
-                "https://miguitas.azurewebsites.net",
+                "https://miguitas-web.conveyor.cloud",
                 "/api",
                 "/Products");
             if (!response.IsSuccess)

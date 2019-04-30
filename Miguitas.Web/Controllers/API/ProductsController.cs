@@ -19,6 +19,5 @@
         {
             return this.Ok(this.productRepository.GetAllWithUsers());
         }
-
     }
 }
