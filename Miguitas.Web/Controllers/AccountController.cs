@@ -225,6 +225,11 @@
             return this.View(model);
         }
 
+        public IActionResult NotAuthorized()
+        {
+            return this.View();
+        }
+
         public async Task<IActionResult> Logout()
         {
             await this.userHelper.LogoutAsync();
