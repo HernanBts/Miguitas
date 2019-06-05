@@ -62,6 +62,7 @@
             //services.AddScoped<IRepository, Repository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICountryRepository, CountryRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
 
             services.AddScoped<IUserHelper, UserHelper>();
 

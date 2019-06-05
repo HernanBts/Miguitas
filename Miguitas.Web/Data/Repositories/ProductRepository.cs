@@ -1,7 +1,9 @@
 ﻿namespace Miguitas.Web.Data.Repositories
 {
+    using System.Collections.Generic;
     using System.Linq;
     using Entities;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
 
     public class ProductRepository : GenericRepository<Product>, IProductRepository
@@ -17,6 +19,24 @@
         {
             return this.context.Products.Include(p => p.User);
         }
+
+        public IEnumerable<SelectListItem> GetComboProducts()
+        {
+            var list = this.context.Products.Select(p => new SelectListItem
+            {
+                Text = p.Name,
+                Value = p.Id.ToString()
+            }).ToList();
+
+            list.Insert(0, new SelectListItem
+            {
+                Text = "(Seleccione un producto...)",
+                Value = "0"
+            });
+
+            return list;
+        }
+
     }
 
 }
