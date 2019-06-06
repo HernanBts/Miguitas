@@ -1,9 +1,11 @@
 ﻿namespace Miguitas.Web.Controllers
 {
+    using System;
     using System.Threading.Tasks;
     using Data.Repositories;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Miguitas.Web.Helpers;
     using Miguitas.Web.Models;
 
     [Authorize]
@@ -100,6 +102,51 @@
             return this.RedirectToAction("Create");
         }
 
-    }
+        public async Task<IActionResult> Deliver(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
+            var order = await this.orderRepository.GetOrdersAsync(id.Value);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            var model = new DeliverViewModel
+            {
+                Id = order.Id,
+                DeliveryDate = DateTime.Today
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Deliver(DeliverViewModel model)
+        {
+            if (this.ModelState.IsValid)
+            {
+                await this.orderRepository.DeliverOrder(model);
+                return this.RedirectToAction("Index");
+            }
+
+            return this.View();
+        }
+
+
+        public async Task<IActionResult> DeleteOrder(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            await this.orderRepository.DeleteOrderAsync(id.Value);
+            return this.RedirectToAction("Index");
+        }
+
+    }
 }

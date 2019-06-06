@@ -161,6 +161,39 @@
             return true;
         }
 
-    }
+        public async Task DeliverOrder(DeliverViewModel model)
+        {
+            var order = await this.context.Orders.FindAsync(model.Id);
+            if (order == null)
+            {
+                return;
+            }
 
+            order.DeliveryDate = model.DeliveryDate;
+            this.context.Orders.Update(order);
+            await this.context.SaveChangesAsync();
+        }
+
+        public async Task<Order> GetOrdersAsync(int id)
+        {
+            return await this.context.Orders.FindAsync(id);
+        }
+
+        public async Task DeleteOrderAsync(int id)
+        {
+            // Obtein all of OrdersDetail, (bug i think).
+            var details = await this.context.OrderDetails.ToListAsync();
+            var order = await this.context.Orders.FindAsync(id);
+
+            if (order == null)
+            {
+                return;
+            }
+
+            this.context.OrderDetails.RemoveRange(order.Items);
+            this.context.Orders.Remove(order);
+            await this.context.SaveChangesAsync();
+        }
+
+    }
 }
