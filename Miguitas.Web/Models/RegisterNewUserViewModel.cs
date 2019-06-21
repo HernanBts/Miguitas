@@ -17,6 +17,10 @@
         public string PhoneNumber { get; set; }
 
         [Required]
+        [Display(Name = "Direccion")]
+        public string Address { get; set; }
+
+        [Required]
         [Display(Name = "Contraseña")]
         public string Password { get; set; }
 

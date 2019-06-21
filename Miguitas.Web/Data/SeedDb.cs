@@ -25,9 +25,8 @@
         {
             await this.context.Database.EnsureCreatedAsync();
 
-            await this.userHelper.CheckRoleAsync("Admin");
-            await this.userHelper.CheckRoleAsync("Customer");
-
+            await this.CheckRoles();
+           
             var user = await this.userHelper.GetUserByEmailAsync("admin@miguitas.com");
             if (user == null)
             {
@@ -65,6 +64,11 @@
             }
         }
 
+        private async Task CheckRoles()
+        {
+            await this.userHelper.CheckRoleAsync("Admin");
+            await this.userHelper.CheckRoleAsync("Customer");
+        }
 
         private void AddProduct(string name, User user)
         {

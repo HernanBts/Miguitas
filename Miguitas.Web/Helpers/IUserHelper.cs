@@ -1,5 +1,6 @@
 ﻿namespace Miguitas.Web.Helpers
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Data.Entities;
     using Microsoft.AspNetCore.Identity;
@@ -7,6 +8,8 @@
 
     public interface IUserHelper
     {
+        Task<IList<User>> GetAllUsers(string rol);
+
         Task<User> GetUserByEmailAsync(string email);
 
         Task<User> GetUserByPhoneAsync(string phone);

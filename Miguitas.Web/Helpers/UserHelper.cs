@@ -1,5 +1,6 @@
 ﻿namespace Miguitas.Web.Helpers
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Data.Entities;
     using Microsoft.AspNetCore.Identity;
@@ -19,6 +20,11 @@
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.roleManager = roleManager;
+        }
+
+        public async Task<IList<User>> GetAllUsers(string rol)
+       {
+            return await this.userManager.GetUsersInRoleAsync(rol);
         }
 
         public async Task<User> GetUserByEmailAsync(string email)

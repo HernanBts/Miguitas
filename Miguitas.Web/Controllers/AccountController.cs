@@ -8,6 +8,7 @@
     using Microsoft.IdentityModel.Tokens;
     using Models;
     using System;
+    using System.Collections.Generic;
     using System.IdentityModel.Tokens.Jwt;
     using System.Linq;
     using System.Security.Claims;
@@ -116,7 +117,8 @@
                         FirstName = model.FirstName,
                         LastName = model.LastName,
                         PhoneNumber = model.PhoneNumber,
-                        UserName = model.PhoneNumber
+                        UserName = model.PhoneNumber,
+                        Address = model.Address
                     };
 
                     var result = await this.userHelper.AddUserAsync(user, model.Password);
@@ -126,6 +128,7 @@
                         return this.View(model);
                     }
 
+                    await this.userHelper.AddUserToRoleAsync(user, "Customer");
 
                     var loginViewModel = new LoginViewModel
                     {
@@ -236,5 +239,12 @@
             return this.RedirectToAction("Index", "Home");
         }
 
+        public async Task<IActionResult> Customers()
+        {
+            var users = await this.userHelper.GetAllUsers("Customer");
+            List<User> customers = users.Cast<User>().ToList();
+
+            return this.View(customers);
+        }
     }
 }
