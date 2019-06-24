@@ -36,7 +36,6 @@
         {
             return await this.userManager.FindByNameAsync(phone);
         }
-        
 
         public async Task<IdentityResult> AddUserAsync(User user, string password)
         {

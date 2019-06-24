@@ -246,5 +246,15 @@
 
             return this.View(customers);
         }
+
+        public IActionResult CustomerOrders(string id)
+        {
+            if (id == null)
+            {
+                return new NotFoundViewResult("OrdersNotFound");
+            }
+
+            return RedirectToAction("CustomerOrders/"+id, "Orders");
+        }
     }
 }

@@ -15,7 +15,7 @@
             @if (this.User.IsInRole("Admin"))
             {
                 <th>
-                    @Html.DisplayNameFor(model => model.User.FullName)
+                    Datos Cliente
                 </th>
             }
             <th>
@@ -43,36 +43,42 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                @if (this.User.IsInRole("Admin"))
-                {
-                    <th>
-                        @Html.DisplayFor(modelItem => item.User.FullName)
-                    </th>
-                }
+        <tr>
+            @if (this.User.IsInRole("Admin"))
+            {
                 <td>
-                    @Html.DisplayFor(modelItem => item.OrderDate)
+                    @Html.DisplayFor(modelItem => item.User.FullName) |
+
+                    @Html.DisplayFor(modelItem => item.User.Address) |
+
+                    @Html.DisplayFor(modelItem => item.User.PhoneNumber) 
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DeliveryDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Lines)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Quantity)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Value)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OrderDateLocal)
-                </td>
-                <td>
-                    <a asp-action="Deliver" asp-route-id="@item.Id" class="btn btn-info" id="btnDeliver">Deliver</a>
-                    <button data-id="@item.Id" class="btn btn-danger deleteOrderItem" data-toggle="modal" data-target="#deleteDialog">Delete</button>
-                </td>
-            </tr>
+            }
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DeliveryDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lines)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Value)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderDateLocal)
+            </td>
+            <td>
+                <a asp-action="Deliver" asp-route-id="@item.Id" class="btn btn-warning" id="btnDeliver">Deliver</a>
+                <a asp-action="OrderDetails" asp-route-id="@item.Id" class="btn btn-info">Detalle</a>
+                <button data-id="@item.Id" class="btn btn-danger deleteOrderItem" data-toggle="modal" data-target="#deleteDialog">Delete</button>
+                @*<button data-id="@item" class="btn btn-warning userItem" data-toggle="modal" data-target="#userDialog">Ver</button>*@
+            </td>
+        </tr>
         }
     </tbody>
 </table>
@@ -98,24 +104,56 @@
     </div>
 </div>
 
+<!--user Item-->
+@*<div class="modal fade" id="userDialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Informacion de cliente</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-body-p"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>*@
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        // Delete item
-        var item_to_delete;
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Delete item
+            var item_to_delete;
 
-        $('.deleteOrderItem').click((e) => {
-            item_to_delete = e.currentTarget.dataset.id;
+            $('.deleteOrderItem').click((e) => {
+                item_to_delete = e.currentTarget.dataset.id;
+            });
+
+            $("#btnYesDelete").click(function () {
+                window.location.href = '/Orders/DeleteOrder/' + item_to_delete;
+            });
+
+            //var userItem;
+            //var modal = $(this);
+
+            //$('.userItem').click((e) => {
+            //    userItem = e.currentTarget;
+            //});
+
+            //modal.find('.modal-body-p').text('ID: ' + item_to_delete
+            //    + 'Nombre: ' + userItem
+            //                                + 'Direccion: ' + userItem
+            //                                + 'Telefono: ' + userItem);
         });
 
-        $("#btnYesDelete").click(function () {
-            window.location.href = '/Orders/DeleteOrder/' + item_to_delete;
-        });
-    });
-
-</script>
+    </script>
 }
 
 

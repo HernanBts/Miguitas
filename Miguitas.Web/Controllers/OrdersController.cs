@@ -1,25 +1,30 @@
 ﻿namespace Miguitas.Web.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Data.Repositories;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Miguitas.Web.Helpers;
-    using Miguitas.Web.Models;
+    using Helpers;
+    using Models;
+    using Miguitas.Web.Data.Entities;
 
     [Authorize]
     public class OrdersController : Controller
     {
         private readonly IOrderRepository orderRepository;
         private readonly IProductRepository productRepository;
+        private readonly IUserHelper userHelper;
 
         public OrdersController(
             IOrderRepository orderRepository,
-            IProductRepository productRepository)
+            IProductRepository productRepository,
+            IUserHelper userHelper)
         {
             this.orderRepository = orderRepository;
             this.productRepository = productRepository;
+            this.userHelper = userHelper;
         }
 
         public async Task<IActionResult> Index()
@@ -148,5 +153,26 @@
             return this.RedirectToAction("Index");
         }
 
+        public async Task<IActionResult> OrderDetails(int? id)
+        {
+            if (id == null)
+            {
+                return new NotFoundViewResult("OrdersNotFound");
+            }
+
+            var orderDetails = await this.orderRepository.GetDetailsAsync(id.Value);
+            if (orderDetails == null)
+            {
+                return new NotFoundViewResult("ProductNotFound");
+            }
+
+            return View(orderDetails);
+        }
+
+        public async Task<IActionResult> CustomerOrders(string id)
+        {
+            var model = await orderRepository.GetOrdersAsync(id);
+            return View(model);
+        }
     }
 }

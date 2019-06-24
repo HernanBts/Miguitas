@@ -1,6 +1,7 @@
 ﻿namespace Miguitas.Web.Data.Repositories
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using Entities;
@@ -51,10 +52,25 @@
                 return null;
             }
 
-            return this.context.OrderDetailTemps
+            var details = this.context.OrderDetailTemps
                 .Include(o => o.Product)
                 .Where(o => o.User == user)
                 .OrderBy(o => o.Product.Name);
+
+            return details;
+        }
+
+        public async Task<IQueryable<OrderDetail>> GetDetailsAsync(int id)
+        {
+            var order = await this.context.Orders
+                .Include(o => o.Items)
+                .ThenInclude(i => i.Product)
+                .Where(o => o.Id == id).FirstOrDefaultAsync();
+            if (order == null)
+            {
+                return null;
+            }
+            return order.Items.AsQueryable();
         }
 
         public async Task AddItemToOrderAsync(AddItemViewModel model, string userName)
