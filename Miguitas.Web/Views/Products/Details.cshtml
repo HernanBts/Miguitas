@@ -4,54 +4,55 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Detalles</h2>
-
-<div>
-    <h4>Product</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ImageUrl)
-        </dt>
-        <dd>
-            @if (!string.IsNullOrEmpty(Model.ImageUrl))
-            {
-                <img src="@Url.Content(Model.ImageUrl)" alt="Image" style="width:200px;height:300px;max-width: 100%; height: auto;" />
-            }
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.IsAvailable)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IsAvailable)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Stock)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Stock)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Editar</a>
-    <a asp-action="Index" class="btn btn-success">Volver</a>
+<div class="bg-img-board container" style="padding-bottom:1%">
+    <h2>Detalle de producto</h2>
+    <div>
+        <h4>Product</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Price)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ImageUrl)
+            </dt>
+            <dd>
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <img src="@Url.Content(Model.ImageUrl)" alt="Image" style="width:200px;height:300px;max-width: 100%; height: auto;" />
+                }
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.IsAvailable)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.IsAvailable)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Stock)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Stock)
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Editar</a>
+        <a asp-action="Index" class="btn btn-success">Volver</a>
+    </div>
 </div>

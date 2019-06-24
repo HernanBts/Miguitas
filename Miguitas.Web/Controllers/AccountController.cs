@@ -130,6 +130,11 @@
 
                     await this.userHelper.AddUserToRoleAsync(user, "Customer");
 
+                    user = await this.userHelper.GetUserByEmailAsync(this.User.Identity.Name);
+                    if (await this.userHelper.IsUserInRoleAsync(user, "Admin"))
+                    {
+                        return this.RedirectToAction("Customers", "Account");
+                    }
                     var loginViewModel = new LoginViewModel
                     {
                         Password = model.Password,

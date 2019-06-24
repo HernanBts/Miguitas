@@ -1,0 +1,59 @@
+﻿.navbar-custom {
+    background-color: #e55d00;
+}
+
+.bg-dark {
+    background-color: #000000;
+}
+
+.bg-orange {
+    background-color: #e55d00;
+}
+
+.bg-img-board {
+    /* The image used */
+    background-image: url(../images/board.jpg);
+}
+
+.bg-img-wood {
+    /* The image used */
+    background-image: url(../images/Madera.png);
+}
+
+.bg-img-frame {
+    /* The image used */
+    background-image: url(../images/woodframe2.jpg);
+}
+
+.text-orange {
+    text-decoration-color: #e55d00;
+}
+
+.mystyle {
+    width: 100px;
+    height: 150px;
+    max-width: 100%;
+    height: auto;
+    margin: 0 0.4em;
+    padding: 0 !important;
+    border: 1px solid #d3232e;
+}
+
+.circleborder {
+    width: 300px;
+    height: 300px;
+    border-radius: 150px;
+    -webkit-border-radius: 150px;
+    -moz-border-radius: 150px;
+    background: url(URL) no-repeat;
+    box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+    -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+    -moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+}
+
+.img-custom {
+    width: 100px;
+    height: 150px;
+    max-width: 100%;
+    height: auto;
+}

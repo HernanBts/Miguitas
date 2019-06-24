@@ -4,89 +4,92 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Orders</h2>
+<div class="bg-img-board container" style="padding-bottom:1%">
+    <h2 class="text-center">Pedidos</h2>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            @if (this.User.IsInRole("Admin"))
-            {
+    <p>
+        <a asp-action="Create" class="btn btn-success">Nuevo Pedido</a>
+    </p>
+    <table class="table text-light">
+        <thead>
+            <tr>
+                @if (this.User.IsInRole("Admin"))
+                {
+                    <th>
+                        Datos Cliente
+                    </th>
+                }
                 <th>
-                    Datos Cliente
+                    @Html.DisplayNameFor(model => model.OrderDate)
                 </th>
-            }
-            <th>
-                @Html.DisplayNameFor(model => model.OrderDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DeliveryDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Lines)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Value)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderDateLocal)
-            </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DeliveryDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Lines)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Quantity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Value)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OrderDateLocal)
+                </th>
 
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-        <tr>
-            @if (this.User.IsInRole("Admin"))
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
             {
-                <td>
-                    @Html.DisplayFor(modelItem => item.User.FullName) |
+                <tr>
+                    @if (this.User.IsInRole("Admin"))
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.User.FullName) |
 
-                    @Html.DisplayFor(modelItem => item.User.Address) |
+                            @Html.DisplayFor(modelItem => item.User.Address) |
 
-                    @Html.DisplayFor(modelItem => item.User.PhoneNumber) 
-                </td>
+                            @Html.DisplayFor(modelItem => item.User.PhoneNumber)
+                        </td>
+                    }
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DeliveryDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Lines)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Value)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderDateLocal)
+                    </td>
+                    <td>
+                        <a asp-action="OrderDetails" asp-route-id="@item.Id" class="btn btn-info">Detalle</a>
+                        @if (this.User.IsInRole("Admin"))
+                        {
+                            <a asp-action="Deliver" asp-route-id="@item.Id" class="btn btn-warning" id="btnDeliver">Enviar</a>
+                            <button data-id="@item.Id" class="btn btn-danger deleteOrderItem" data-toggle="modal" data-target="#deleteDialog">Borrar</button>
+                        }
+                    </td>
+                </tr>
             }
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DeliveryDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Lines)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Value)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderDateLocal)
-            </td>
-            <td>
-                <a asp-action="Deliver" asp-route-id="@item.Id" class="btn btn-warning" id="btnDeliver">Deliver</a>
-                <a asp-action="OrderDetails" asp-route-id="@item.Id" class="btn btn-info">Detalle</a>
-                <button data-id="@item.Id" class="btn btn-danger deleteOrderItem" data-toggle="modal" data-target="#deleteDialog">Delete</button>
-                @*<button data-id="@item" class="btn btn-warning userItem" data-toggle="modal" data-target="#userDialog">Ver</button>*@
-            </td>
-        </tr>
-        }
-    </tbody>
-</table>
-
+        </tbody>
+    </table>
+</div>
 <!--Delete Item-->
 <div class="modal fade" id="deleteDialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content bg-dark">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Delete Item</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -94,11 +97,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>Do you want to delete the product from order?</p>
+                <p>¿Desea borrar el pedido?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger" id="btnYesDelete">Delete</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-danger" id="btnYesDelete">Borrar</button>
             </div>
         </div>
     </div>
@@ -106,23 +109,23 @@
 
 <!--user Item-->
 @*<div class="modal fade" id="userDialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Informacion de cliente</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p class="modal-body-p"></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Informacion de cliente</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="modal-body-p"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
-    </div>
-</div>*@
+    </div>*@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

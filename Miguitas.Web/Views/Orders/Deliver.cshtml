@@ -4,36 +4,36 @@
     ViewData["Title"] = "Deliver";
 }
 
-<h2>Envio</h2>
+<div class="bg-img-board container" style="padding-bottom:1%">
+    <h2 class="text-center">Enviar Pedido</h2>
 
-<h4>Order</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Deliver">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Deliver">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
 
-            <div class="form-group">
-                <label asp-for="DeliveryDate" class="control-label"></label>
-                @*<div class="input-group date" data-provide="datepicker">
+                <div class="form-group">
+                    <label asp-for="DeliveryDate" class="control-label"></label>
+                    @*<div class="input-group date" data-provide="datepicker">
+                            <input asp-for="DeliveryDate" class="form-control" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>*@
                     <input asp-for="DeliveryDate" class="form-control" />
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                </div>*@
-                <input asp-for="DeliveryDate" class="form-control"/>
-                <span asp-validation-for="DeliveryDate" class="text-danger"></span>
-            </div>
+                    <span asp-validation-for="DeliveryDate" class="text-danger"></span>
+                </div>
 
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-                <a asp-action="Index" class="btn btn-success">Back to List</a>
-            </div>
-        </form>
+                <div class="form-group">
+                    <a asp-action="Index" class="btn btn-secondary">Volver</a>
+                    <input type="submit" value="Enviar" class="btn btn-success" />
+                </div>
+            </form>
+        </div>
     </div>
 </div>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
