@@ -15,7 +15,7 @@
         {
             base.OnAppearing();
             App.Navigator = this.Navigator;
+            App.Master = this;
         }
-
     }
 }

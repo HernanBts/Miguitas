@@ -1,13 +1,14 @@
-﻿using Xamarin.Forms.Xaml;
-
-[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
-namespace Miguitas.UIForms
+﻿namespace Miguitas.UIForms
 {
-    using Miguitas.UIForms.Views;
+    using Xamarin.Forms.Xaml;
     using Xamarin.Forms;
+    using Miguitas.UIForms.Views;
+
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class App : Application
     {
-        public static object Navigator { get; internal set; }
+        public static NavigationPage Navigator { get; internal set; }
+        public static MasterPage Master { get; internal set; }
 
         public App()
         {
