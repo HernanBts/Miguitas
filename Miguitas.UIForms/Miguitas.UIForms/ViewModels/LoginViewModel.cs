@@ -1,8 +1,10 @@
 ﻿namespace Miguitas.UIForms.ViewModels
 {
     using GalaSoft.MvvmLight.Command;
+    using Miguitas.Common.Helpers;
     using Miguitas.Common.Models;
     using Miguitas.Common.Services;
+    using Newtonsoft.Json;
     using System.Windows.Input;
     using Views;
     using Xamarin.Forms;
@@ -11,6 +13,7 @@
     {
         private bool isRunning;
         private bool isEnabled;
+
         private readonly ApiService apiService;
 
         public bool IsRunning
@@ -29,14 +32,17 @@
 
         public string Password { get; set; }
 
+        public bool IsRemember { get; set; }
+
         public ICommand LoginCommand => new RelayCommand(this.Login);
+
+        public bool IsToggled { get; private set; }
 
         public LoginViewModel()
         {
             this.apiService = new ApiService();
             this.IsEnabled = true;
-            this.Email = "admin@miguitas.com";
-            this.Password = "123456";
+            this.IsRemember = true;
         }
 
         private async void Login()
@@ -90,6 +96,12 @@
             mainViewModel.Products = new ProductsViewModel();
             mainViewModel.UserEmail = this.Email;
             mainViewModel.UserPassword = this.Password;
+
+            Settings.IsRemember = this.IsToggled;
+            Settings.UserEmail = this.Email;
+            Settings.UserPassword = this.Password;
+            Settings.Token = JsonConvert.SerializeObject(token);
+
             Application.Current.MainPage = new MasterPage();
         }
     }

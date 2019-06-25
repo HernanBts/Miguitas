@@ -75,7 +75,6 @@
                 PageName = m.PageName,
                 Title = m.Title
             }).ToList());
-            this.Login = new LoginViewModel();
         }
 
         private async void GoAddProduct()

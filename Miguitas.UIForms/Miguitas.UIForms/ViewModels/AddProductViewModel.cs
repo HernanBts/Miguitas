@@ -4,6 +4,9 @@
     using Common.Models;
     using Common.Services;
     using GalaSoft.MvvmLight.Command;
+    using Miguitas.Common.Helpers;
+    using Plugin.Media;
+    using Plugin.Media.Abstractions;
     using Xamarin.Forms;
 
     public class AddProductViewModel : BaseViewModel
@@ -12,7 +15,13 @@
         private bool isEnabled;
         private readonly ApiService apiService;
 
-        public string Image { get; set; }
+        private ImageSource imageSource;
+
+        public ImageSource ImageSource
+        {
+            get => this.imageSource;
+            set => this.SetValue(ref this.imageSource, value);
+        }
 
         public bool IsRunning
         {
@@ -32,12 +41,16 @@
 
         public string Description { get; set; }
 
+        private MediaFile file;
+
         public ICommand SaveCommand => new RelayCommand(this.Save);
+
+        public ICommand ChangeImageCommand => new RelayCommand(this.ChangeImage);
 
         public AddProductViewModel()
         {
+            this.ImageSource = "no_img";
             this.apiService = new ApiService();
-            this.Image = "no_img";
             this.IsEnabled = true;
         }
 
@@ -71,7 +84,12 @@
             this.IsRunning = true;
             this.IsEnabled = false;
 
-            //TODO: Add image
+            byte[] imageArray = null;
+            if (this.file != null)
+            {
+                imageArray = FilesHelper.ReadFully(this.file.GetStream());
+            }
+
             var product = new Product
             {
                 IsAvailabe = true,
@@ -79,7 +97,8 @@
                 Description = this.Description,
                 Price = price,
                 Stock = 1,
-                User = new User { UserName = MainViewModel.GetInstance().UserEmail }
+                User = new User { UserName = MainViewModel.GetInstance().UserEmail },
+                ImageArray = imageArray
             };
 
             var url = Application.Current.Resources["UrlAPI"].ToString();
@@ -104,6 +123,50 @@
             this.IsEnabled = true;
             await App.Navigator.PopAsync();
         }
+
+        private async void ChangeImage()
+        {
+            await CrossMedia.Current.Initialize();
+
+            var source = await Application.Current.MainPage.DisplayActionSheet(
+                "¿De donde desea subir la imagen?",
+                "Cancelar",
+                null,
+                "Galleria",
+                "Camara");
+
+            if (source == "Cancelar")
+            {
+                this.file = null;
+                return;
+            }
+
+            if (source == "Camara")
+            {
+                this.file = await CrossMedia.Current.TakePhotoAsync(
+                    new StoreCameraMediaOptions
+                    {
+                        Directory = "Pictures",
+                        Name = "test.jpg",
+                        PhotoSize = PhotoSize.Medium,
+                    }
+                );
+            }
+            else
+            {
+                this.file = await CrossMedia.Current.PickPhotoAsync();
+            }
+
+            if (this.file != null)
+            {
+                this.ImageSource = ImageSource.FromStream(() =>
+                {
+                    var stream = file.GetStream();
+                    return stream;
+                });
+            }
+        }
+
     }
 
 }

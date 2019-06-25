@@ -31,6 +31,8 @@
 
         [JsonProperty("user")]
         public User User { get; set; }
+
+        public byte[] ImageArray { get; set; }
     }
 
 }
