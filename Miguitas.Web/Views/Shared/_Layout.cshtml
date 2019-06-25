@@ -38,6 +38,13 @@
                     <li class="nav-item">
                         <a asp-area="" asp-controller="Orders" asp-action="Index" class="nav-link text-light">Pedidos</a>
                     </li>
+
+                    @if (this.User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a asp-area="" asp-controller="Orders" asp-action="Create" class="nav-link text-light">Carrito</a>
+                        </li>
+                    }
                     @if (this.User.IsInRole("Admin"))
                     {
                         <li class="nav-item">
@@ -47,16 +54,28 @@
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
                     <ul class="nav navbar-nav form-inline">
+
+                        <li class="nav-item" style="padding-right:1%">
+                            <a href="https://www.instagram.com/miguitas_resistencia/">
+                                <i class="fa fa-instagram" style="color:#e55d00"></i>
+                            </a>
+                            <a href="https://www.facebook.com/miguitasresistencia/">
+                                <i class="fa fa-facebook-official" style="color:#e55d00"></i>
+                            </a>
+                        </li>
+
                         @if (this.User.Identity.IsAuthenticated)
                         {
                             <li><a asp-area="" asp-controller="Account" asp-action="ChangeUser" class="nav-link text-light bg-orange">@this.User.Identity.Name</a></li>
-                            <li><a asp-area="" asp-controller="Account" asp-action="Logout" class="nav-link text-danger">Salir</a></li>
+                            <li><a asp-area="" asp-controller="Account" asp-action="Logout" style="color:#e55d00" class="nav-link">Salir</a></li>
                         }
                         else
                         {
                             <li><a asp-area="" asp-controller="Account" asp-action="Login" class="nav-link text-light bg-orange">Ingresar</a></li>
                         }
+
                     </ul>
+
                 </form>
             </div>
         </div>
@@ -67,7 +86,9 @@
     <div>
         <div class="container body-content bg-img-frame" style="padding-top:2%;padding-left:2%;padding-right:2%; margin-top:2%">
             @RenderBody()
+
             <footer>
+                
                 <h6 class="text-right" style="padding-bottom:0.4%">&copy; 2019 - MiguitasWeb</h6>
             </footer>
         </div>

@@ -225,5 +225,15 @@
             return this.View();
         }
 
+        public IActionResult AddToBasket(int? id)
+        {
+            if (id == null)
+            {
+                return new NotFoundViewResult("ProductNotFound");
+            }
+
+            return RedirectToAction("AddToBasket/" + id, "Orders");
+        }
+
     }
 }

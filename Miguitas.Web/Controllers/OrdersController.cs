@@ -174,5 +174,26 @@
             var model = await orderRepository.GetOrdersAsync(id);
             return View(model);
         }
+
+        public async Task<IActionResult> AddToBasket(int? id)
+        {
+            var model = new AddItemViewModel
+            {
+                Quantity = 1,
+                Products = this.productRepository.GetComboProducts()
+            };
+
+            if (id == null)
+            {
+                return new NotFoundViewResult("OrdersNotFound");
+            } else if (id != null) {
+                model.ProductId = id.Value;
+                await this.orderRepository.AddItemToOrderAsync(model, this.User.Identity.Name);
+                return this.RedirectToAction("Create");
+            }
+
+            return RedirectToAction("Index", "Products");
+        }
+        
     }
 }

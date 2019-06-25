@@ -9,6 +9,13 @@
 
     <section class="container">
         <h1>Productos</h1>
+        @if (this.User.IsInRole("Admin"))
+        {
+            <br />
+            <p class="text-center ">
+                <a asp-action="Create" class="btn btn-success">Crear Nuevo Producto</a>
+            </p>
+        }
         @{
             bool cn = true;
             @foreach (var item in Model)
@@ -66,16 +73,15 @@
                             <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"><i class="fa fa-trash"></i></a>
                         </div>
                     }
+                    else if (this.User.Identity.IsAuthenticated)
+                    {
+                        <div class="col-md-2 text-center">
+                            <a asp-action="AddToBasket" asp-route-id="@item.Id" class="btn btn-secondary"><i class="fa fa-shopping-basket"></i></a>
+                        </div>
+                    }
                 </div>
                 cn = !cn;
             }
-        }
-        @if (this.User.IsInRole("Admin"))
-        {
-    <br />
-            <p class="text-center ">
-                <a asp-action="Create" class="btn btn-success">Crear Nuevo</a>
-            </p>
         }
         <hr style="width:200px" class="w3-opacity">
     </section>
