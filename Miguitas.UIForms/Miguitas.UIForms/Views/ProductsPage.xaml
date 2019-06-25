@@ -4,6 +4,9 @@
          	x:Class="Miguitas.UIForms.Views.ProductsPage"
          	BindingContext="{Binding Main, Source={StaticResource Locator}}"
          	Title="Products">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="ic_add_circle_outline" Command="{Binding AddProductCommand}"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout
         	BindingContext="{Binding Products}"
@@ -18,9 +21,13 @@
                     <DataTemplate>
                         <ViewCell>
                             <Grid>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SelectProductCommand}"/>
+                                </Grid.GestureRecognizers>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <Image
                                 	Grid.Column="0"
@@ -46,6 +53,10 @@
                                     	TextColor="Green">
                                     </Label>
                                 </StackLayout>
+                                <Image
+    	                            Grid.Column="2"
+    	                            Source="ic_arrow_forward">
+                                </Image>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

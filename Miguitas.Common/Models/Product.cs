@@ -27,7 +27,7 @@
         public double Stock { get; set; }
 
         [JsonProperty("imageFullPath")]
-        public Uri ImageFullPath { get; set; }
+        public string ImageFullPath { get; set; }
 
         [JsonProperty("user")]
         public User User { get; set; }

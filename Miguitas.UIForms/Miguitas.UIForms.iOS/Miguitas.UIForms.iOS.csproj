@@ -149,4 +149,13 @@
   <ItemGroup>
     <BundleResource Include="Resources\ic_settings.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_add_circle_outline.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\no_img.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_arrow_forward.png" />
+  </ItemGroup>
 </Project>

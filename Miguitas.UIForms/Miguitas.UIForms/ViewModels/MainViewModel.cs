@@ -1,22 +1,35 @@
 ﻿namespace Miguitas.UIForms.ViewModels
 {
+    using GalaSoft.MvvmLight.Command;
     using Miguitas.Common.Models;
-    using System;
+    using Miguitas.UIForms.Views;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
+    using System.Windows.Input;
 
     public class MainViewModel
     {
         private static MainViewModel instance;
 
-        public LoginViewModel Login { get; set; }
+        public string UserEmail { get; set; }
+
+        public string UserPassword { get; set; }
 
         public TokenResponse Token { get; set; }
 
+        public ObservableCollection<MenuItemViewModel> Menus { get; set; }
+
+        public LoginViewModel Login { get; set; }
+
         public ProductsViewModel Products { get; set; }
 
-        public ObservableCollection<MenuItemViewModel> Menus { get; set; }
+        public AddProductViewModel AddProduct { get; set; }
+
+        public EditProductViewModel EditProduct { get; set; }
+
+        public ICommand AddProductCommand => new RelayCommand(this.GoAddProduct);
+
 
         //public MainViewModel()
         //{
@@ -65,6 +78,11 @@
             this.Login = new LoginViewModel();
         }
 
+        private async void GoAddProduct()
+        {
+            this.AddProduct = new AddProductViewModel();
+            await App.Navigator.PushAsync(new AddProductPage());
+        }
 
         public static MainViewModel GetInstance()
         {
