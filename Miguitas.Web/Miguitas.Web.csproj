@@ -62,4 +62,8 @@
     <None Include="wwwroot\node_modules\font-awesome\scss\_variables.scss" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Miguitas.Common\Miguitas.Common.csproj" />
+  </ItemGroup>
+
 </Project>
