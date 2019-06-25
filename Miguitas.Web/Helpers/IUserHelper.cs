@@ -31,5 +31,11 @@
         Task<bool> IsUserInRoleAsync(User user, string roleName);
 
         Task LogoutAsync();
+
+        Task<string> GenerateEmailConfirmationTokenAsync(User user);
+
+        Task<IdentityResult> ConfirmEmailAsync(User user, string token);
+
+        Task<User> GetUserByIdAsync(string userId);
     }
 }

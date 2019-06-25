@@ -65,7 +65,7 @@
             var request = new TokenRequest
             {
                 Password = this.Password,
-                Username = this.Email
+                PhoneNumber = this.Email
             };
 
             var url = Application.Current.Resources["UrlAPI"].ToString();
@@ -89,7 +89,6 @@
             mainViewModel.Token = token;
             mainViewModel.Products = new ProductsViewModel();
             await Application.Current.MainPage.Navigation.PushAsync(new ProductsPage());
-
         }
     }
 

@@ -1,4 +1,4 @@
-﻿namespace Miguitas.Common.Models
+﻿    namespace Miguitas.Common.Models
 {
     using System;
     using Newtonsoft.Json;
@@ -10,6 +10,8 @@
 
         [JsonProperty("lastName")]
         public string LastName { get; set; }
+
+        public string address { get; set; }
 
         [JsonProperty("id")]
         public Guid Id { get; set; }
@@ -55,6 +57,7 @@
 
         [JsonProperty("accessFailedCount")]
         public long AccessFailedCount { get; set; }
-    }
 
+        public string FullName { get { return $"{this.FirstName} {this.LastName}"; } }
+    }
 }

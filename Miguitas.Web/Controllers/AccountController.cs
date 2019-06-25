@@ -19,11 +19,15 @@
     {
         private readonly IUserHelper userHelper;
         private readonly IConfiguration configuration;
+        private readonly IMailHelper mailHelper;
 
-        public AccountController(IUserHelper userHelper, IConfiguration configuration)
+        public AccountController(IUserHelper userHelper, 
+                                 IConfiguration configuration,
+                                 IMailHelper mailHelper)
         {
             this.userHelper = userHelper;
             this.configuration = configuration;
+            this.mailHelper = mailHelper;
         }
 
         [HttpPost]
@@ -116,8 +120,8 @@
                     {
                         FirstName = model.FirstName,
                         LastName = model.LastName,
-                        PhoneNumber = model.PhoneNumber,
                         UserName = model.PhoneNumber,
+                        PhoneNumber = model.PhoneNumber,
                         Address = model.Address
                     };
 
@@ -130,10 +134,15 @@
 
                     await this.userHelper.AddUserToRoleAsync(user, "Customer");
 
+                    // Bypass token for email confirmation... because the context change
+                    var token = await this.userHelper.GenerateEmailConfirmationTokenAsync(user);
+                    await this.userHelper.ConfirmEmailAsync(user, token);
+
                     if (this.User.Identity.Name == "admin@miguitas.com")
                     {
                         return this.RedirectToAction("Customers", "Account");
                     }
+
                     var loginViewModel = new LoginViewModel
                     {
                         Password = model.Password,
@@ -150,12 +159,93 @@
 
                     this.ModelState.AddModelError(string.Empty, "The user couldn't be login.");
                     return this.View(model);
+                    //this.mailHelper.SendMail(model.Username, "Miguitas Email confirmation", $"<h1>Email Confirmation</h1>" +
+                    //    $"To allow the user, " +
+                    //    $"plase click in this link:</br></br><a href = \"{tokenLink}\">Confirm Email</a>");
+                    //this.ViewBag.Message = "The instructions to allow your user has been sent to email.";
                 }
 
                 this.ModelState.AddModelError(string.Empty, "The username is already registered.");
             }
 
             return this.View(model);
+        }
+
+
+        //[HttpPost]
+        //public async Task<IActionResult> Register(RegisterNewUserViewModel model)
+        //{
+        //    if (this.ModelState.IsValid)
+        //    {
+        //        var user = await this.userHelper.GetUserByPhoneAsync(model.PhoneNumber);
+        //        if (user == null)
+        //        {
+        //            user = new User
+        //            {
+        //                FirstName = model.FirstName,
+        //                LastName = model.LastName,
+        //                PhoneNumber = model.PhoneNumber,
+        //                UserName = model.PhoneNumber,
+        //                Address = model.Address
+        //            };
+
+        //            var result = await this.userHelper.AddUserAsync(user, model.Password);
+        //            if (result != IdentityResult.Success)
+        //            {
+        //                this.ModelState.AddModelError(string.Empty, "The user couldn't be created.");
+        //                return this.View(model);
+        //            }
+
+        //            await this.userHelper.AddUserToRoleAsync(user, "Customer");
+
+        //            if (this.User.Identity.Name == "admin@miguitas.com")
+        //            {
+        //                return this.RedirectToAction("Customers", "Account");
+        //            }
+        //            var loginViewModel = new LoginViewModel
+        //            {
+        //                Password = model.Password,
+        //                RememberMe = false,
+        //                PhoneNumber = model.PhoneNumber
+        //            };
+
+        //            var result2 = await this.userHelper.LoginAsync(loginViewModel);
+
+        //            if (result2.Succeeded)
+        //            {
+        //                return this.RedirectToAction("Index", "Home");
+        //            }
+
+        //            this.ModelState.AddModelError(string.Empty, "The user couldn't be login.");
+        //            return this.View(model);
+        //        }
+
+        //        this.ModelState.AddModelError(string.Empty, "The username is already registered.");
+        //    }
+
+        //    return this.View(model);
+        //}
+
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        {
+            if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(token))
+            {
+                return this.NotFound();
+            }
+
+            var user = await this.userHelper.GetUserByIdAsync(userId);
+            if (user == null)
+            {
+                return this.NotFound();
+            }
+
+            var result = await this.userHelper.ConfirmEmailAsync(user, token);
+            if (!result.Succeeded)
+            {
+                return this.NotFound();
+            }
+
+            return View();
         }
 
         public async Task<IActionResult> ChangeUser()

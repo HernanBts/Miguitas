@@ -35,7 +35,8 @@
                     FirstName = "admin",
                     LastName = "admin",
                     Email = "admin@miguitas.com",
-                    UserName = "admin@miguitas.com"
+                    UserName = "admin@miguitas.com",
+                    Address = "Av. San Martion 301"
                 };
 
                 var result = await this.userHelper.AddUserAsync(user, "123456");
@@ -45,6 +46,8 @@
                 }
 
                 await this.userHelper.AddUserToRoleAsync(user, "Admin");
+                var token = await this.userHelper.GenerateEmailConfirmationTokenAsync(user);
+                await this.userHelper.ConfirmEmailAsync(user, token);
             }
 
             var isInRole = await this.userHelper.IsUserInRoleAsync(user, "Admin");
