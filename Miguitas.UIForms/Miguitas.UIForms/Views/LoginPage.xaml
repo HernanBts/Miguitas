@@ -8,8 +8,9 @@
         <ScrollView
         	BindingContext="{Binding Login}">
             <StackLayout
-            	Padding="5">
+            	Padding="10">
                 <Image
+                    BackgroundColor="#e55d00"
                 	HeightRequest="150"
                 	Source="logo_miguitas">
                 </Image>
@@ -33,14 +34,13 @@
 	                    HorizontalOptions="Center"
 	                    Orientation="Horizontal">
                     <Label
-    	                Text="Rememberme in this device"
+    	                Text="Recondar cuenta?"
     	                VerticalOptions="Center">
                     </Label>
                     <Switch
     	                IsToggled="{Binding IsRemember}">
                     </Switch>
                 </StackLayout>
-
                 <ActivityIndicator
                 	IsRunning="{Binding IsRunning}"
                     VerticalOptions="CenterAndExpand">

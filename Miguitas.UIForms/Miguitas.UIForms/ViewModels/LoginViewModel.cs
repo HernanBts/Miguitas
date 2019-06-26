@@ -14,6 +14,8 @@
         private bool isRunning;
         private bool isEnabled;
 
+        public bool IsRemember { get; set; }
+
         private readonly ApiService apiService;
 
         public bool IsRunning
@@ -31,8 +33,6 @@
         public string Email { get; set; }
 
         public string Password { get; set; }
-
-        public bool IsRemember { get; set; }
 
         public ICommand LoginCommand => new RelayCommand(this.Login);
 
@@ -97,7 +97,7 @@
             mainViewModel.UserEmail = this.Email;
             mainViewModel.UserPassword = this.Password;
 
-            Settings.IsRemember = this.IsToggled;
+            Settings.IsRemember = this.IsRemember;
             Settings.UserEmail = this.Email;
             Settings.UserPassword = this.Password;
             Settings.Token = JsonConvert.SerializeObject(token);
