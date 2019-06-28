@@ -6,14 +6,31 @@
     background-color: #000000;
 }
 
+.bg-board-solid {
+    background-color: rgb(25, 25, 25);
+}
+
+.bg-frame-solid {
+    background-color: rgb(126, 97, 52);
+}
+
 .bg-orange {
     background-color: #e55d00;
 }
 
+.bg-grey {
+    background-color: #363636;
+}
+
 .bg-img-board {
     /* The image used */
-    background-image: url(../images/board.jpg);
+    background-image: url(../images/board_bg.jpg);
+    min-height: 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
+
 
 .bg-img-wood {
     /* The image used */
@@ -22,7 +39,7 @@
 
 .bg-img-frame {
     /* The image used */
-    background-image: url(../images/woodframe2.jpg);
+    background-image: url(../images/Frame.jpg);
 }
 
 .text-orange {
@@ -54,6 +71,15 @@
 .img-custom {
     width: 100px;
     height: 150px;
+    max-width: 100%;
+    height: auto;
+}
+
+.img-prod {
+    border-radius: 50%;
+    border: 4px solid #fafafa;
+    width: 260px;
+    height: 260px;
     max-width: 100%;
     height: auto;
 }

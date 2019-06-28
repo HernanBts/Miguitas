@@ -26,8 +26,15 @@
         }
 
         // GET: Products
-        public IActionResult Index()
+        public IActionResult Index(string id)
         {
+            // For Filten and use the same view
+            if (id == null)
+            {
+                id = "Combo";
+            }
+            this.ViewBag.ProductType = id.ToString();
+
             return View(this.productRepository.GetAll().OrderBy(p => p.Name));
         }
 

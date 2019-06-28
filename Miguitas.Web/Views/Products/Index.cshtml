@@ -8,80 +8,101 @@
 <div class="bg-img-board" style="padding-bottom:1%">
 
     <section class="container">
-        <h1>Productos</h1>
+        <br />
+        @if (@ViewBag.ProductType == "(o)")
+        {
+            <h1 class="text-center">Productos</h1>
+
+        }
+        else
+        {
+            <h1 class="text-center">@ViewBag.ProductType</h1>
+        }
+
+        @*@ViewBag.ProductType*@
+        @{
+            bool cn = true;
+            @foreach (var item in Model)
+            {
+                @if (item.Name.Contains(@ViewBag.ProductType))
+                {
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <br />
+                            <h3 class="text-center">
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </h3>
+                            <br />
+                        </div>
+                    </div>
+                    <div class="row text-center" style="margin-left:4%">
+                        @if (cn)
+                        {
+                            <div class="col-md-5">
+                                <div class="text-center">
+
+                                    @if (!string.IsNullOrEmpty(item.ImageUrl))
+                                    {
+                                        <div>
+                                            <img src="@Url.Content(item.ImageUrl)" class="img-thumbnail" style="border-radius: 36%; width: 300px; height: 300px; max-width: 100%; height: 90%;" alt="Image">
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        <div class="col-md-4">
+                            <br />
+                            <p>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </p>
+                            <br />
+                            <p class="text-warning">
+                                @Html.DisplayFor(modelItem => item.Price)
+                            </p>
+                        </div>
+                        @if (!cn)
+                        {
+                            <div class="col-md-5">
+                                <div class="text-center">
+
+                                    @if (!string.IsNullOrEmpty(item.ImageUrl))
+                                    {
+                                        <div>
+                                            <img src="@Url.Content(item.ImageUrl)" class="img-thumbnail" style="border-radius: 36%; width: 300px; height: 300px; max-width: 100%; height: 90%;" alt="Image">
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                        @if (this.User.IsInRole("Admin"))
+                        {
+                            <div class="col-md-2 text-center fa-flip-vertical">
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning "><i class="fa fa-edit"></i></a>
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary"><i class="fa fa-info"></i></a>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                            </div>
+                        }
+                        else if (this.User.Identity.IsAuthenticated)
+                        {
+                            <div class="col-md-2 text-center">
+                                <h6>Agregar al carrito</h6>
+                                <a asp-action="AddToBasket" asp-route-id="@item.Id" class="btn btn-secondary"><i class="fa fa-shopping-basket"></i></a>
+                            </div>
+                        }
+                    </div>
+                }
+                cn = !cn;
+            }
+        }
+        <br />
         @if (this.User.IsInRole("Admin"))
         {
             <br />
             <p class="text-center ">
                 <a asp-action="Create" class="btn btn-success">Crear Nuevo Producto</a>
             </p>
-        }
-        @{
-            bool cn = true;
-            @foreach (var item in Model)
-            {
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3 class="text-center">
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </h3>
-                    </div>
-                </div>
-                <div class="row text-center">
-                    @if (cn)
-                    {
-                        <div class="col-md-4">
-                            <div class="text-center">
-
-                                @if (!string.IsNullOrEmpty(item.ImageUrl))
-                                {
-                                    <div>
-                                        <img src="@Url.Content(item.ImageUrl)" class="fa-border" style="border-radius: 50%; border: 3px solid #e55d00; line-height: 200px; width: 200px; height: 200px; max-width: 100%; height: auto;" alt="Image">
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                    }
-                    <div class="col-md-6">
-                        <p>
-                            @Html.DisplayFor(modelItem => item.Description)
-                        </p>
-                        <br />
-                        <p class="text-warning">
-                            @Html.DisplayFor(modelItem => item.Price)
-                        </p>
-                    </div>
-                    @if (!cn)
-                    {
-                        <div class="col-md-4">
-                            <div class="text-center">
-
-                                @if (!string.IsNullOrEmpty(item.ImageUrl))
-                                {
-                                    <div>
-                                        <img src="@Url.Content(item.ImageUrl)" class="fa-border" style="border-radius: 50%; border: 3px solid #e55d00; line-height: 200px; width: 200px; height: 200px; max-width: 100%; height: auto;" alt="Image">
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                    }
-                    @if (this.User.IsInRole("Admin"))
-                    {
-                        <div class="col-md-2 text-center">
-                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning "><i class="fa fa-edit"></i></a>
-                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary"><i class="fa fa-info"></i></a>
-                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-                        </div>
-                    }
-                    else if (this.User.Identity.IsAuthenticated)
-                    {
-                        <div class="col-md-2 text-center">
-                            <a asp-action="AddToBasket" asp-route-id="@item.Id" class="btn btn-secondary"><i class="fa fa-shopping-basket"></i></a>
-                        </div>
-                    }
-                </div>
-                cn = !cn;
-            }
         }
         <hr style="width:200px" class="w3-opacity">
     </section>

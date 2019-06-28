@@ -34,37 +34,51 @@
                         <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link text-light">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a asp-area="" asp-controller="Products" asp-action="Index" class="nav-link text-light">Productos</a>
+                        <a asp-area="" asp-controller="Products" asp-route-id="Combo" asp-action="Index" class="nav-link text-light">Combos</a>
                     </li>
                     <li class="nav-item">
-                        <a asp-area="" asp-controller="Orders" asp-action="Index" class="nav-link text-light">Pedidos</a>
+                        <a asp-area="" asp-controller="Products" asp-route-id="Comb." asp-action="Index" class="nav-link text-light">Comb.+10</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-area="" asp-controller="Products" asp-route-id="(o)" asp-action="Index" class="nav-link text-light">Otros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-area="" asp-controller="Products" asp-route-id="Promo" asp-action="Index" class="nav-link text-light">Promos</a>
                     </li>
 
-                    @if (this.User.Identity.IsAuthenticated)
-                    {
-                        <li class="nav-item">
-                            <a asp-area="" asp-controller="Orders" asp-action="Create" class="nav-link text-light">Carrito</a>
-                        </li>
-                    }
-                    @if (this.User.IsInRole("Admin"))
-                    {
-                        <li class="nav-item">
-                            <a asp-area="" asp-controller="Account" asp-action="Customers" class="nav-link text-light">Clientes</a>
-                        </li>
-                    }
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
-                    <ul class="nav navbar-nav form-inline">
 
-                        <li class="nav-item" style="padding-right:1%">
-                            <a href="https://www.instagram.com/miguitas_resistencia/">
-                                <i class="fa fa-instagram" style="color:#e55d00"></i>
-                            </a>
-                            <a href="https://www.facebook.com/miguitasresistencia/">
-                                <i class="fa fa-facebook-official" style="color:#e55d00"></i>
-                            </a>
+                    <ul class="nav navbar-nav form-inline">
+                        @if (this.User.Identity.IsAuthenticated && !this.User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a asp-area="" asp-controller="Orders" asp-action="Create" class="nav-link text-light">Carrito</a>
+                            </li>
+                        }
+                        <li class="nav-item">
+                            <a asp-area="" asp-controller="Orders" asp-action="Index" class="nav-link text-light">Pedidos</a>
                         </li>
 
+                        @*@if (this.User.IsInRole("Admin"))
+        {
+            <li class="nav-item">
+                <a asp-area="" asp-controller="Account" asp-action="Customers" class="nav-link text-light">Clientes</a>
+            </li>
+        }*@
+                        <li class="nav-item " style="padding-right:1%">
+                            <a href="https://wa.me/5493624651111/">
+                                <i class="fa fa-whatsapp" style="color:white"></i>
+                            </a>
+                            <a href="https://www.facebook.com/miguitasresistencia/">
+                                <i class="fa fa-facebook-official" style="color:white"></i>
+                            </a>
+                            <a href="https://www.instagram.com/miguitas_resistencia/">
+                                <i class="fa fa-instagram" style="color:white"></i>
+                            </a>
+                            <a> | </a>
+                            <br />
+                        </li>
                         @if (this.User.Identity.IsAuthenticated)
                         {
                             <li><a asp-area="" asp-controller="Account" asp-action="ChangeUser" class="nav-link text-light bg-orange">@this.User.Identity.Name</a></li>
@@ -82,15 +96,16 @@
         </div>
     </nav>
 
-    <partial name="_CookieConsentPartial" />
-
     <div>
         <div class="container body-content bg-img-frame" style="padding-top:2%;padding-left:2%;padding-right:2%; margin-top:2%">
             @RenderBody()
 
             <footer>
-                
-                <h6 class="text-right" style="padding-bottom:0.4%">&copy; 2019 - MiguitasWeb</h6>
+                <h6 class="text-center" style="padding-bottom:0.4%">
+                    &copy; 2019 - MiguitasWeb  |  Dev. by: <a style="color:white" href="https://www.linkedin.com/in/hernan-bts/">
+                        HernánBts. <i class="fa fa-linkedin-square"></i>
+                    </a>
+                </h6>
             </footer>
         </div>
     </div>
