@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "554966875425",
+    "firebase_url": "https://miguitas-85bf1.firebaseio.com",
+    "project_id": "miguitas-85bf1",
+    "storage_bucket": "miguitas-85bf1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:554966875425:android:b37db49dee03957e",
+        "android_client_info": {
+          "package_name": "com.hernanbts.miguitas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "554966875425-iapo0ulodr94o912um53k1pi91g7kt0c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8GOavuhytAvv1_6pEfo4DDo1PrlrQtnQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "554966875425-iapo0ulodr94o912um53k1pi91g7kt0c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

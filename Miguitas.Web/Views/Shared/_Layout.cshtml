@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Miguitas.Web</title>
-
+    <title>@ViewData["Title"] - Miguitas</title>
+    <link rel="icon" href="~/images/icon.png">
     <environment include="Development">
         <link href="~/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="~/css/Styles.css" />
@@ -16,12 +16,12 @@
         <link href="~/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     </environment>
 </head>
-<body class="bg-img-wood text-light" style="margin-bottom:2%">
+<body class="bg-img-back text-light" style="margin-bottom:2%">
     <nav class="navbar navbar-expand-lg navbar-light bg-dark navbar-dark">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand navbar-custom">
-                    <img width="90" src="~/images/logo.png" alt="">
+                <a class="navbar-brand">
+                    <img class="img-thumbnail" width="90" src="~/images/logo3.png" alt="">
                 </a>
             </div>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,20 +68,23 @@
         }*@
                         <li class="nav-item " style="padding-right:1%">
                             <a href="https://wa.me/5493624651111/">
-                                <i class="fa fa-whatsapp" style="color:white"></i>
+                                <i class="fa fa-whatsapp fa-2x" style="color:white"></i>
                             </a>
                             <a href="https://www.facebook.com/miguitasresistencia/">
-                                <i class="fa fa-facebook-official" style="color:white"></i>
+                                <i class="fa fa-facebook-square fa-2x" style="color:white"></i>
                             </a>
                             <a href="https://www.instagram.com/miguitas_resistencia/">
-                                <i class="fa fa-instagram" style="color:white"></i>
+                                <i class="fa fa-instagram fa-2x" style="color:white"></i>
                             </a>
-                            <a> | </a>
+                            <a>  </a>
                             <br />
                         </li>
-                        @if (this.User.Identity.IsAuthenticated)
+                        @if (this.User.IsInRole("Admin"))
                         {
                             <li><a asp-area="" asp-controller="Account" asp-action="ChangeUser" class="nav-link text-light bg-orange">@this.User.Identity.Name</a></li>
+                        }
+                        else if (this.User.Identity.IsAuthenticated)
+                        {
                             <li><a asp-area="" asp-controller="Account" asp-action="Logout" style="color:#e55d00" class="nav-link">Salir</a></li>
                         }
                         else

@@ -14,6 +14,10 @@
     background-color: rgb(126, 97, 52);
 }
 
+.bg-orange2 {
+    background-color: #f98434;
+}
+
 .bg-orange {
     background-color: #e55d00;
 }
@@ -32,14 +36,18 @@
 }
 
 
-.bg-img-wood {
+.bg-img-back {
     /* The image used */
-    background-image: url(../images/Madera.png);
+    background-image: url(../images/BackWood.jpeg);
+    min-height: 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .bg-img-frame {
     /* The image used */
-    background-image: url(../images/Frame.jpg);
+    background-image: url(../images/BackWood.png);
 }
 
 .text-orange {

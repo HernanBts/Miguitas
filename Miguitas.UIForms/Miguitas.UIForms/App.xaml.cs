@@ -8,6 +8,10 @@
     using Newtonsoft.Json;
     using Miguitas.Common.Models;
     using System;
+    using Microsoft.AppCenter;
+    using Microsoft.AppCenter.Push;
+    using Microsoft.AppCenter.Analytics;
+    using Microsoft.AppCenter.Crashes;
 
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class App : Application
@@ -41,7 +45,8 @@
 
         protected override void OnStart()
         {
-            // Handle when your app starts
+            AppCenter.Start("android=20aa2c75-55e7-477a-94e9-5eaff9a1b6a0;",
+                  typeof(Analytics), typeof(Crashes));
         }
 
         protected override void OnSleep()

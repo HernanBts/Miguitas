@@ -9,6 +9,8 @@
     using Helpers;
     using Models;
     using Miguitas.Web.Data.Entities;
+    using System.Net.Http;
+    using Newtonsoft.Json;
 
     [Authorize]
     public class OrdersController : Controller
@@ -195,5 +197,19 @@
             return RedirectToAction("Index", "Products");
         }
         
+
+        public async Task<bool> SendPostNotificacion()
+        {
+            HttpClient httpclient = new HttpClient();
+
+            httpclient.DefaultRequestHeaders.Add("Accept", "application/json");
+            httpclient.DefaultRequestHeaders.Add("X-API-Token", "20aa2c75-55e7-477a-94e9-5eaff9a1b6a0");
+            Object obj = new Object();
+
+            string json = JsonConvert.SerializeObject(obj);
+
+
+            return false;
+        }
     }
 }
