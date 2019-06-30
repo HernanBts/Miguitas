@@ -5,10 +5,11 @@
 }
 
 <div class="bg-img-board container" style="padding-bottom:1%">
-    <h2 class="text-center">Nuevo Pedido</h2>
+    <br />
+    <h2 class="text-center">Carrito</h2>
     <p>
         @*<a asp-action="AddProduct" class="btn btn-warning">Agregar productos</a>*@
-        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmDialog">Confirm Order</button>
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmDialog">Confirmar Pedido</button>
     </p>
     <table class="table text-light">
         <thead>
@@ -17,13 +18,13 @@
                     @Html.DisplayNameFor(model => model.Product.Name)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Price)
+                    Prcio
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Quantity)
+                    Cantidad
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Value)
+                    Total
                 </th>
                 <th></th>
             </tr>
@@ -68,8 +69,8 @@
                 <p>¿Desea Confirmar el pedido?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-success" id="btnYes">Cerrar Pedido</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-secondary" id="btnYes">Realizar Pedido</button>
             </div>
         </div>
     </div>
@@ -89,7 +90,7 @@
                 <p>¿Desea borrar el producto del pedido?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                 <button type="button" class="btn btn-danger" id="btnYesDelete">Borrar</button>
             </div>
         </div>

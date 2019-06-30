@@ -1,17 +1,145 @@
 ﻿@{
-    ViewData["Title"] = "Contact";
+    ViewData["Title"] = "Contacto";
 }
-<h2>@ViewData["Title"]</h2>
-<h3>@ViewData["Message"]</h3>
+<div class="bg-img-board container" style="padding-bottom:1%">
+    <!--Section: Contact v.2-->
+    <div class="row" style="height:550px;">
+        <section class="mb-4 col-lg-12 glyphicon-object-align-horizontal">
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+            <!--Section heading-->
+            <h2 class="h1-responsive font-weight-bold text-center my-4">Contactanos!</h2>
+            <!--Section description-->
+            <p class="text-center w-responsive mx-auto mb-5">
+                ¿Alguna pregunta o sugerencia? Por favor escribinos por el motivo que sea. Nos comunicaremos contigo lo antes posible...
+            </p>
 
-<address>
-    <strong>Support:</strong> <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+            <div class="row">
+                <div class="col-lg-5 maps">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1770.1813423290525!2d-58.984065!3d-27.457966!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xc39c595760b9ce29!2sMiguita&#39;s!5e0!3m2!1ses!2sus!4v1561880845640!5m2!1ses!2sus" frameborder="0" style="border-radius: 20%; border: solid #ffffff; margin-left:6%; width: 90%; height: 100%; max-height: 100%; height: 80%" allowfullscreen></iframe>
+                </div>
+                <!--Grid column-->
+                <div class="col-lg-6">
+                    <form role="form" method="post" id="reused_form">
+
+                        <div class="row">
+                            <div class="col-sm-12 form-group">
+                                <label for="message">
+                                    Mensaje:
+                                </label>
+                                <textarea class="form-control" type="textarea" name="message" id="message" maxlength="4000" rows="4"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4 form-group">
+                                <label for="name">
+                                    Nombre:
+                                </label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                            <div class="col-sm-3 form-group">
+                                <label for="phone">
+                                    Telefono:
+                                </label>
+                                <input type="text" class="form-control" id="phone" name="phone" required>
+                            </div>
+                            <div class="col-sm-5 form-group">
+                                <label for="email">
+                                    Correo electronico:
+                                </label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-sm-12 form-group">
+                                <button type="submit" class="btn btn-lg btn-secondary text-center">Enviar</button>
+                            </div>
+                        </div>
+
+                    </form>
+                    <div id="success_message" style="width:100%; height:100%; display:none; ">
+                        <h3>Su mensaje se envio correctamente!</h3>
+                    </div>
+                    <div id="error_message"
+                         style="width:100%; height:100%; display:none; ">
+                        <h3>Error</h3>
+                        Ocurio un error durante el envio del mensaje.
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!--Section: Contact v.2-->
+    <div class="row text-center">
+        <div class="col-lg-8 text-right">
+            <img src="~/images/place.png" class="img-thumbnail" style="border-radius: 24%; margin-top:1%; width: 75%; height: 60%; max-height: 80%; height: auto" alt="Image">
+        </div>
+        <div class="col-lg-4">
+            <img src="~/images/phone.png" class="img-thumbnail" style="border-radius: 42%; margin-top:1%; width: 60%; height: 60%; max-height: 80%; height: auto" alt="Image">
+        </div>
+    </div>
+    <br />
+    <div class="text-right">
+        <a href="~/Manual-Miguitas.pdf" class="text-right">
+            <i class="fa fa-download" style="color:#e55d00"></i>
+        </a>
+    </div>
+</div>
+  
+<script>
+    $(function () {
+        function after_form_submitted(data) {
+            if (data.result == 'success') {
+                $('form#reused_form').hide();
+                $('#success_message').show();
+                $('#error_message').hide();
+            }
+            else {
+                $('#error_message').append('<ul></ul>');
+
+                jQuery.each(data.errors, function (key, val) {
+                    $('#error_message ul').append('<li>' + key + ':' + val + '</li>');
+                });
+                $('#success_message').hide();
+                $('#error_message').show();
+
+                //reverse the response on the button
+                $('button[type="button"]', $form).each(function () {
+                    $btn = $(this);
+                    label = $btn.prop('orig_label');
+                    if (label) {
+                        $btn.prop('type', 'submit');
+                        $btn.text(label);
+                        $btn.prop('orig_label', '');
+                    }
+                });
+
+            }//else
+        }
+
+        $('#reused_form').submit(function (e) {
+            e.preventDefault();
+
+            $form = $(this);
+            //show some response on the button
+            $('button[type="submit"]', $form).each(function () {
+                $btn = $(this);
+                $btn.prop('type', 'button');
+                $btn.prop('orig_label', $btn.text());
+                $btn.text('Sending ...');
+            });
+
+
+            $.ajax({
+                type: "POST",
+                url: 'handler.php',
+                data: $form.serialize(),
+                success: after_form_submitted,
+                dataType: 'json'
+            });
+
+        });
+    });
+</script>

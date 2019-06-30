@@ -9,17 +9,17 @@
 
     <section class="container">
         <br />
-        @if (@ViewBag.ProductType == "(o)")
-        {
-            <h1 class="text-center">Productos</h1>
+        @*@if (@ViewBag.ProductType == "(o)")
+            {
+                <h1 class="text-center">Productos</h1>
 
-        }
-        else
-        {
-            <h1 class="text-center">@ViewBag.ProductType</h1>
-        }
+            }
+            @*else
+            {
+                <h1 class="text-center">@ViewBag.ProductType</h1>
+            }
 
-        @*@ViewBag.ProductType*@
+            @ViewBag.ProductType*@
         @{
             bool cn = true;
             @foreach (var item in Model)
@@ -32,7 +32,7 @@
                         <div class="col-md-12">
                             <br />
                             <h3 class="text-center">
-                                @Html.DisplayFor(modelItem => item.Name)
+                                @Html.Raw(item.Name.ToString().Remove(0, 4))
                             </h3>
                             <br />
                         </div>
@@ -53,11 +53,10 @@
                             </div>
                         }
                         <div class="col-md-4">
-                            <br />
-                            <p>
-                                @Html.DisplayFor(modelItem => item.Description)
-                            </p>
-                            <br />
+                            <br />  
+                            <p class="text-hide" id="hidden-description"><span>@Html.DisplayFor(modelItem => item.Description)</span></p>
+                            <p class="requested-description"><span>@Html.DisplayFor(modelItem => item.Description)</span></p>
+
                             <p class="text-warning">
                                 @Html.DisplayFor(modelItem => item.Price)
                             </p>
@@ -107,3 +106,24 @@
         <hr style="width:200px" class="w3-opacity">
     </section>
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            // br description line...
+
+            //var string = $('itemDescription').text();
+            //string = string.replace(/./g, "<br />");
+
+
+            var str = $('#hidden-description').text();
+            var line = str.replace(/\./g, ',<br>');
+            $('.requested-description').html(line);
+
+        });
+
+    </script>
+}

@@ -10,8 +10,6 @@
     using System;
     using Microsoft.AppCenter;
     using Microsoft.AppCenter.Push;
-    using Microsoft.AppCenter.Analytics;
-    using Microsoft.AppCenter.Crashes;
 
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class App : Application
@@ -45,8 +43,30 @@
 
         protected override void OnStart()
         {
-            AppCenter.Start("android=20aa2c75-55e7-477a-94e9-5eaff9a1b6a0;",
-                  typeof(Analytics), typeof(Crashes));
+            if (!AppCenter.Configured)
+            {
+                Microsoft.AppCenter.Push.Push.PushNotificationReceived += OnPushNotificationRecieved;
+            }
+
+            // AppCenter.start after
+            AppCenter.Start("android=20aa2c75-55e7-477a-94e9-5eaff9a1b6a0;" +
+                              "ios={Your iOS App secret here}",
+
+                              typeof(Microsoft.AppCenter.Push.Push));
+            AppCenter.GetInstallIdAsync().ContinueWith(installId =>
+            {
+                System.Diagnostics.Debug.WriteLine("*****************************************************");
+                System.Diagnostics.Debug.WriteLine("-----------------" + installId.Result);
+                System.Diagnostics.Debug.WriteLine("*****************************************************");
+            });
+        }
+
+        private void OnPushNotificationRecieved(object sender, PushNotificationReceivedEventArgs e)
+        {
+            Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
+            {
+                Current.MainPage.DisplayAlert(e.Title, e.Message, "OK");
+            });
         }
 
         protected override void OnSleep()

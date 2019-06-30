@@ -6,13 +6,13 @@
     <title>@ViewData["Title"] - Miguitas</title>
     <link rel="icon" href="~/images/icon.png">
     <environment include="Development">
-        <link rel="stylesheet" href="~/css/Styles.css" />
+        <link rel="stylesheet" href="~/css/Styles.css" asp-append-version="true" />
         <link href="~/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     </environment>
     <environment exclude="Development">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="~/css/Styles.css" asp-append-version="true" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link href="~/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     </environment>
 </head>
@@ -33,17 +33,26 @@
                     <li class="nav-item active">
                         <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link text-light">Inicio</a>
                     </li>
-                    <li class="nav-item">
-                        <a asp-area="" asp-controller="Products" asp-route-id="Combo" asp-action="Index" class="nav-link text-light">Combos</a>
+                    <li>
+                        <div class="dropdown show nav-item">
+                            <a class="nav-link text-light" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Combos
+                            </a>
+                            <div class="dropdown-menu bg-dark" aria-labelledby="dropdownMenuLink">
+                                <a asp-area="" asp-controller="Products" asp-route-id="(cc)" asp-action="Index" class="nav-link text-light">Clasico</a>
+                                <a asp-area="" asp-controller="Products" asp-route-id="(ce)" asp-action="Index" class="nav-link text-light">Espacial</a>
+                                <a asp-area="" asp-controller="Products" asp-route-id="(cp)" asp-action="Index" class="nav-link text-light">Premium</a>
+                            </div>
+                        </div>
                     </li>
                     <li class="nav-item">
-                        <a asp-area="" asp-controller="Products" asp-route-id="Comb." asp-action="Index" class="nav-link text-light">Comb.+10</a>
+                        <a asp-area="" asp-controller="Products" asp-route-id="(mp)" asp-action="Index" class="nav-link text-light">+10 Personas</a>
                     </li>
                     <li class="nav-item">
-                        <a asp-area="" asp-controller="Products" asp-route-id="(o)" asp-action="Index" class="nav-link text-light">Otros</a>
+                        <a asp-area="" asp-controller="Products" asp-route-id="(op)" asp-action="Index" class="nav-link text-light">+ Productos</a>
                     </li>
                     <li class="nav-item">
-                        <a asp-area="" asp-controller="Products" asp-route-id="Promo" asp-action="Index" class="nav-link text-light">Promos</a>
+                        <a asp-area="" asp-controller="Products" asp-route-id="(pr)" asp-action="Index" class="nav-link text-light">Promos</a>
                     </li>
 
                 </ul>
@@ -58,6 +67,9 @@
                         }
                         <li class="nav-item">
                             <a asp-area="" asp-controller="Orders" asp-action="Index" class="nav-link text-light">Pedidos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-area="" asp-controller="Home" asp-action="Contact" class="nav-link text-light">Contacto</a>
                         </li>
 
                         @*@if (this.User.IsInRole("Admin"))
@@ -82,6 +94,7 @@
                         @if (this.User.IsInRole("Admin"))
                         {
                             <li><a asp-area="" asp-controller="Account" asp-action="ChangeUser" class="nav-link text-light bg-orange">@this.User.Identity.Name</a></li>
+                            <li><a asp-area="" asp-controller="Account" asp-action="Logout" style="color:#e55d00" class="nav-link">Salir</a></li>
                         }
                         else if (this.User.Identity.IsAuthenticated)
                         {
@@ -100,7 +113,7 @@
     </nav>
 
     <div>
-        <div class="container body-content bg-img-frame" style="border: 4px solid #60391e; padding-top:2%;padding-left:2%;padding-right:2%; margin-top:2%">
+        <div class="container body-content bg-img-wframe" style="border: 4px solid #613314; padding-top:2%;padding-left:2%;padding-right:2%; margin-top:2%">
             @RenderBody()
 
             <footer>
