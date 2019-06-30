@@ -4,13 +4,15 @@
     ViewData["Title"] = "Index";
 }
 
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+
 <div class="bg-img-board container" style="padding-bottom:1%">
     <h2 class="text-center">Pedidos</h2>
 
-    <p>
+    @*<p>
         <a asp-action="Create" class="btn btn-success">Nuevo Pedido</a>
-    </p>
-    <table class="table text-light">
+    </p>*@
+    <table class="table text-light table-striped" id="ProductsTable">
         <thead>
             <tr>
                 @if (this.User.IsInRole("Admin"))
@@ -19,9 +21,6 @@
                         Datos Cliente
                     </th>
                 }
-                <th>
-                    @Html.DisplayNameFor(model => model.OrderDate)
-                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.DeliveryDate)
                 </th>
@@ -44,20 +43,17 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
+                <tr class="bg-dark">
                     @if (this.User.IsInRole("Admin"))
                     {
                         <td>
-                            @Html.DisplayFor(modelItem => item.User.FullName) |
+                            @Html.DisplayFor(modelItem => item.User.FirstName) |
 
                             @Html.DisplayFor(modelItem => item.User.Address) |
 
                             @Html.DisplayFor(modelItem => item.User.PhoneNumber)
                         </td>
                     }
-                    <td>
-                        @Html.DisplayFor(modelItem => item.OrderDate)
-                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.DeliveryDate)
                     </td>
@@ -74,11 +70,11 @@
                         @Html.DisplayFor(modelItem => item.OrderDateLocal)
                     </td>
                     <td>
-                        <a asp-action="OrderDetails" asp-route-id="@item.Id" class="btn btn-info">Detalle</a>
+                        <a asp-action="OrderDetails" asp-route-id="@item.Id" class="btn btn-info"><i class="fa fa-edit"></i></a>
                         @if (this.User.IsInRole("Admin"))
                         {
-                            <a asp-action="Deliver" asp-route-id="@item.Id" class="btn btn-warning" id="btnDeliver">Enviar</a>
-                            <button data-id="@item.Id" class="btn btn-danger deleteOrderItem" data-toggle="modal" data-target="#deleteDialog">Borrar</button>
+                            <a asp-action="Deliver" asp-route-id="@item.Id" class="btn btn-warning" id="btnDeliver"><i class="fa fa-ship"></i></a>
+                            <button data-id="@item.Id" class="btn btn-danger deleteOrderItem" data-toggle="modal" data-target="#deleteDialog"><i class="fa fa-trash"></i></button>
                         }
                     </td>
                 </tr>
@@ -128,8 +124,12 @@
     </div>*@
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#ProductsTable').DataTable();
+        });
+    </script>
     <script type="text/javascript">
         $(document).ready(function () {
             // Delete item
@@ -155,7 +155,6 @@
             //                                + 'Direccion: ' + userItem
             //                                + 'Telefono: ' + userItem);
         });
-
     </script>
 }
 
