@@ -6,8 +6,8 @@
     <title>@ViewData["Title"] - Miguitas</title>
     <link rel="icon" href="~/images/icon.png">
     <environment include="Development">
-        <link href="~/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="~/css/Styles.css" />
+        <link href="~/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     </environment>
     <environment exclude="Development">
@@ -16,7 +16,7 @@
         <link href="~/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     </environment>
 </head>
-<body class="bg-img-back text-light" style="margin-bottom:2%">
+<body class="text-light bg-img-wall" style="margin-bottom:4%">
     <nav class="navbar navbar-expand-lg navbar-light bg-dark navbar-dark">
         <div class="container">
             <div class="navbar-header">
@@ -100,11 +100,11 @@
     </nav>
 
     <div>
-        <div class="container body-content bg-img-frame" style="padding-top:2%;padding-left:2%;padding-right:2%; margin-top:2%">
+        <div class="container body-content bg-img-frame" style="border: 4px solid #60391e; padding-top:2%;padding-left:2%;padding-right:2%; margin-top:2%">
             @RenderBody()
 
             <footer>
-                <h6 class="text-center" style="padding-bottom:0.4%">
+                <h6 class="text-center" style="padding-bottom:0.2%">
                     &copy; 2019 - MiguitasWeb  |  Dev. by: <a style="color:white" href="https://www.linkedin.com/in/hernan-bts/">
                         HernánBts. <i class="fa fa-linkedin-square"></i>
                     </a>

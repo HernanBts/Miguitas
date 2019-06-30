@@ -38,16 +38,35 @@
 
 .bg-img-back {
     /* The image used */
-    background-image: url(../images/BackWood.jpeg);
+    background-image: url(../images/backwood.png);
     min-height: 100%;
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
 }
 
+.bg-img-wall {
+    /* The image used */
+    background-image: url(../images/wood_wall.png);
+    min-height: 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bg-img-wood {
+    /* The image used */
+    background-image: url(../images/Madera.png);
+}
+
 .bg-img-frame {
     /* The image used */
-    background-image: url(../images/BackWood.png);
+    background-image: url(../images/Frame.jpg);
+}
+
+.bg-img-wframe {
+    /* The image used */
+    background-image: url(../images/Frame_wood.png);
 }
 
 .text-orange {
