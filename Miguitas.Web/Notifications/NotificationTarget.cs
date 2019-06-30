@@ -4,8 +4,8 @@
 
     public class NotificationTarget
     {
-        public string Type { get; set; }
+        public string type { get; set; }
 
-        public List<string> Devices { get; set; }
+        public List<string> devices { get; set; }
     }
 }

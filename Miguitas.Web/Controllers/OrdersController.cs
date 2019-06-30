@@ -11,6 +11,8 @@
     using Miguitas.Web.Data.Entities;
     using System.Net.Http;
     using Newtonsoft.Json;
+    using Miguitas.Web.Notifications;
+    using System.Text;
 
     [Authorize]
     public class OrdersController : Controller
@@ -103,6 +105,11 @@
             var response = await this.orderRepository.ConfirmOrderAsync(this.User.Identity.Name);
             if (response)
             {
+                var user = await this.userHelper.GetUserByPhoneAsync(this.User.Identity.Name);
+
+                var title = "Nuevo Pedido";
+                var body = "el cliente: "+ user.FullName +" Realizo un pedido. Telefono: " + user.PhoneNumber;
+                await this.SendPostNotificacion(title, body);
                 return this.RedirectToAction("Index");
             }
 
@@ -198,17 +205,63 @@
         }
         
 
-        public async Task<bool> SendPostNotificacion()
+        public async Task<bool> SendPostNotificacion(string title, string body)
         {
+            NotificationTarget notification_target = new NotificationTarget()
+            {
+                devices = new List<string>()
+                {
+                    "2a4ccd65-84fc-4dba-882c-a2a00e53d5c8"
+                },
+                type = "devices_target"
+            };
+
+            NotificationContent notification_content = new NotificationContent()
+            {
+                body = body,
+                name = "miguitas",
+                title = title
+            };
+
+            PushNotification pushNotification = new PushNotification()
+            {
+                notification_content = notification_content,
+                notification_target = notification_target
+            };
+
+            // test...
+            //StringContent str = new StringContent();
+
+            // ...
+
             HttpClient httpclient = new HttpClient();
 
             httpclient.DefaultRequestHeaders.Add("Accept", "application/json");
-            httpclient.DefaultRequestHeaders.Add("X-API-Token", "20aa2c75-55e7-477a-94e9-5eaff9a1b6a0");
-            Object obj = new Object();
+            httpclient.DefaultRequestHeaders.Add("X-API-Token", "50077c9264e38c67863455780a6b34fec2c74c31");
 
-            string json = JsonConvert.SerializeObject(obj);
+            string json = JsonConvert.SerializeObject(pushNotification);
+            StringContent stringContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-
+            try
+            {
+                HttpResponseMessage httpResponseMessage =
+                    await httpclient.PostAsync(
+                        "https://api.appcenter.ms/v0.1/apps/HernanBts/Miguitas/push/notifications",
+                        stringContent);
+                if (httpResponseMessage.IsSuccessStatusCode)
+                {
+                    return true;
+                } else if (httpResponseMessage.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    var jsonRes = await httpResponseMessage.Content.ReadAsStringAsync();
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("There was an error");
+                return false;
+            }
             return false;
         }
     }
